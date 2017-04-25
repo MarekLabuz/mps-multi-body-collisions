@@ -27,27 +27,27 @@ border_color = [116 43 21];
 % white = [242 242 242];
 
 balls = {
-    242, 242, 242, 15 + width_inner/2, 16 + 1/4 * length_inner - 1/2 * ball_size, 0;
+    242, 242, 242, 15 + width_inner/2, 15 + 1/4 * length_inner;
     
-    247, 202, 23, 15 + width_inner/2, 15 + 3/4 * length_inner, 0;
+    247, 202, 23, 15 + width_inner/2, 15 + 3/4 * length_inner;
     
-    36, 116, 169, 15 + width_inner/2 - 1/2 * ball_size, 15 + 3/4 * length_inner + ball_size, 1;
-    239, 72, 54, 15 + width_inner/2 + 1/2 * ball_size, 15 + 3/4 * length_inner + ball_size, 0;
+    36, 116, 169, 15 + width_inner/2 - 1/2 * ball_size, 15 + 3/4 * length_inner + ball_size;
+    239, 72, 54, 15 + width_inner/2 + 1/2 * ball_size, 15 + 3/4 * length_inner + ball_size;
     
-    43, 43, 43, 15 + width_inner/2, 15 + 3/4 * length_inner + 2 * ball_size, 0;
-    7, 168, 132, 15 + width_inner/2 + ball_size, 15 + 3/4 * length_inner + 2 * ball_size, 1;
-    143, 68, 173, 15 + width_inner/2 - ball_size, 15 + 3/4 * length_inner + 2 * ball_size, 0;
+    43, 43, 43, 15 + width_inner/2, 15 + 3/4 * length_inner + 2 * ball_size;
+    7, 168, 132, 15 + width_inner/2 + ball_size, 15 + 3/4 * length_inner + 2 * ball_size;
+    143, 68, 173, 15 + width_inner/2 - ball_size, 15 + 3/4 * length_inner + 2 * ball_size;
     
-    179, 55, 64, 15 + width_inner/2 + 1/2 * ball_size, 15 + 3/4 * length_inner + 3 * ball_size, 1;
-    247, 202, 23, 15 + width_inner/2 - 1/2 * ball_size, 15 + 3/4 * length_inner + 3 * ball_size, 1;
-    36, 116, 169, 15 + width_inner/2 + 3/2 * ball_size, 15 + 3/4 * length_inner + 3 * ball_size, 0;
-    239, 72, 54, 15 + width_inner/2 - 3/2 * ball_size, 15 + 3/4 * length_inner + 3 * ball_size, 1;
+    179, 55, 64, 15 + width_inner/2 + 1/2 * ball_size, 15 + 3/4 * length_inner + 3 * ball_size;
+    247, 202, 23, 15 + width_inner/2 - 1/2 * ball_size, 15 + 3/4 * length_inner + 3 * ball_size;
+    36, 116, 169, 15 + width_inner/2 + 3/2 * ball_size, 15 + 3/4 * length_inner + 3 * ball_size;
+    239, 72, 54, 15 + width_inner/2 - 3/2 * ball_size, 15 + 3/4 * length_inner + 3 * ball_size;
     
-    179, 55, 64, 15 + width_inner/2 + ball_size, 15 + 3/4 * length_inner + 4 * ball_size, 0;
-    249, 148, 6, 15 + width_inner/2 + 2 * ball_size, 15 + 3/4 * length_inner + 4 * ball_size, 1;
-    249, 148, 6, 15 + width_inner/2 - ball_size, 15 + 3/4 * length_inner + 4 * ball_size, 0;
-    7, 168, 132, 15 + width_inner/2 - 2 * ball_size, 15 + 3/4 * length_inner + 4 * ball_size, 0;
-    143, 68, 173, 15 + width_inner/2, 15 + 3/4 * length_inner + 4 * ball_size, 1;
+    143, 68, 173, 15 + width_inner/2 + ball_size, 15 + 3/4 * length_inner + 4 * ball_size;
+    249, 148, 6, 15 + width_inner/2 + 2 * ball_size, 15 + 3/4 * length_inner + 4 * ball_size;
+    7, 168, 132, 15 + width_inner/2 - ball_size, 15 + 3/4 * length_inner + 4 * ball_size;
+    179, 55, 64, 15 + width_inner/2 - 2 * ball_size, 15 + 3/4 * length_inner + 4 * ball_size;
+    249, 148, 6, 15 + width_inner/2, 15 + 3/4 * length_inner + 4 * ball_size;
 };
 
 figure;
@@ -82,7 +82,7 @@ axis equal
 balls_rects = zeros(16);
 balls_lines = zeros(16);
 
-for k = 1:2
+for k = 1:1
     balls(1, 5) = num2cell(cell2mat(balls(1, 5)) + 1);
     for i = 1:16
         cX = cell2mat(balls(i, 4));
@@ -100,7 +100,7 @@ for k = 1:2
             delete(balls_lines(i))
         end
         
-        if cell2mat(balls(i, 6)) == 1
+        if cell2mat(balls(1, 6)) ==
             t = ball_size/2 - 1;
             balls_lines(i) = line([cX + t cX - t], [cY + t cY - t], 'Color', [1, 1, 1], 'LineWidth', 2);
         end
