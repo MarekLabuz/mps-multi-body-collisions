@@ -30,11 +30,11 @@ ball_speed = 0.0;
 
 % r, g, b, posX, posY, striped, velocity, angle
 balls = [
-    242, 242, 242, 15 + width_inner/2, 16 + 1/4 * length_inner - 1/2 * ball_size, 0, 0.2, 91;
-    % 242, 242, 242, 30.0, 130.0, 0.0, 0.2, 5.0;
+    % 242, 242, 242, 15 + width_inner/2, 16 + 1/4 * length_inner - 1/2 * ball_size, 0, 0.2, 91;
+    242, 242, 242, 30.0, 130.0, 0.0, 0.2, 5.0;
     
-    247, 202, 23, 15 + width_inner/2, 15 + 3/4 * length_inner, 0, ball_speed, 30;
-    % 247, 202, 23, 60.0, 130, 0.0, 0.0, 0.0;
+    % 247, 202, 23, 15 + width_inner/2, 15 + 3/4 * length_inner, 0, ball_speed, 30;
+    247, 202, 23, 60.0, 130, 0.0, 0.0, 0.0;
      
     36, 116, 169, 15 + width_inner/2 - 1/2 * ball_size, 15 + 3/4 * length_inner + ball_size, 1, ball_speed, 45;
     239, 72, 54, 15 + width_inner/2 + 1/2 * ball_size, 15 + 3/4 * length_inner + ball_size, 0, ball_speed, 50;
@@ -107,7 +107,6 @@ for k = 1:500000
         for j = 1:visible_balls
             if i < j
                 cA = balls(i, 8);
-                vA = balls(i, 7);
                 tX = balls(j, 4);
                 tY = balls(j, 5);
                 tV = balls(j, 7);
@@ -116,7 +115,7 @@ for k = 1:500000
                 balls(i, 8) = new_a1;
                 balls(i, 7) = new_vel1;
                 balls(j, 8) = new_a2;
-                balls(j, 7) = new_vel2;
+                balls(i, 7) = new_vel1;
             end
         end
         
