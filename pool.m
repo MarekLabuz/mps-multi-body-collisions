@@ -26,15 +26,21 @@ border_color = [116 43 21];
 % black = [43 43 43];
 % white = [242 242 242];
 
+w = 3; % 3m/s
+dt = 0.001; % 1/1000 of second
+
+white_ball_speed = (100 * w) * dt;
 ball_speed = 0.0;
+
+cloth_friction = 0.1;
 
 % r, g, b, posX, posY, striped, velocity, angle
 balls = [
-    242, 242, 242, 15 + width_inner/2, 90 + 1/4 * length_inner - 1/2 * ball_size, 0, 0.3, 91;
-    % 242, 242, 242, 30.0, 130.0, 0.0, 0.2, 5.0;
+    242, 242, 242, 15 + width_inner/2, 15 + 1/4 * length_inner - 1/2 * ball_size, 0, white_ball_speed, 91;
+    % 242, 242, 242, 30.0, 130.0, 0.0, 0.2, 0.0;
     
     247, 202, 23, 15 + width_inner/2, 15 + 3/4 * length_inner, 0, ball_speed, 30;
-    % 247, 202, 23, 60.0, 130, 0.0, 0.0, 0.0;
+    % 247, 202, 23, 90.0, 130, 0.0, 0.2, 180.0;
      
     36, 116, 169, 15 + width_inner/2 - 1/2 * ball_size, 15 + 3/4 * length_inner + ball_size, 1, ball_speed, 45;
     239, 72, 54, 15 + width_inner/2 + 1/2 * ball_size, 15 + 3/4 * length_inner + ball_size, 0, ball_speed, 50;
@@ -88,6 +94,8 @@ balls_rects = zeros(16);
 balls_lines = zeros(16);
 
 visible_balls = 16;
+
+time = text(-75, 200, 'Time = 0');
 for k = 1:500000
     if ~ishghandle(fig)
         break
@@ -102,7 +110,6 @@ for k = 1:500000
         cA = balls(i, 8);
         
         [x, y] = move(cX, cY, cV, cA);
-        [e, u] = move(4.9, 2.4, 1, 40);
         balls(i, 4) = x;
         balls(i, 5) = y;
 
@@ -121,13 +128,15 @@ for k = 1:500000
                 tY = balls(j, 5);
                 tV = balls(j, 7);
                 tA = balls(j, 8);
-                [new_a1, new_vel1, new_a2, new_vel2] = ball_bounce(cX, cY, cV, cA, tX, tY, tV, tA);
+                [new_a1, new_vel1, new_a2, new_vel2] = ball_bounce(cX, cY, cV, cA, tX, tY, tV, tA, dt);
                 balls(i, 8) = new_a1;
                 balls(i, 7) = new_vel1;
                 balls(j, 8) = new_a2;
                 balls(j, 7) = new_vel2;
             end
         end
+        
+        balls(i, 7) = apply_friction(cloth_friction, balls(i, 7), dt);
         
         x = cX - ball_size/2;
         y = cY - ball_size/2;
@@ -145,9 +154,10 @@ for k = 1:500000
         if balls(i, 6) == 1
             t = ball_size/2 - 1;
             balls_lines(i) = line([cX + t cX - t], [cY + t cY - t], 'Color', [1, 1, 1], 'LineWidth', 2);
-        end
+        end 
     end
-    pause(0.001);
+    set(time, 'String', ['Time = ', num2str(k * dt), 's']);
+    pause(0.0001);
 end
 
 hold off;

@@ -1,5 +1,6 @@
-function [new_a1, new_vel1, new_a2, new_vel2] = ball_bounce(x1, y1, vel1, a1, x2, y2, vel2, a2)
+function [new_a1, new_vel1, new_a2, new_vel2] = ball_bounce(x1, y1, vel1, a1, x2, y2, vel2, a2, dt)
     ball_size = 5.08;
+    ball_friction = 0.08;
     new_a1 = a1;
     new_vel1 = vel1;
     new_a2 = a2;
@@ -65,6 +66,9 @@ function [new_a1, new_vel1, new_a2, new_vel2] = ball_bounce(x1, y1, vel1, a1, x2
         new_vel1 = sqrt(u1x(1)^2 + u1y(2)^2);
         new_a2 = vector_to_angle([next_x2 - x2, next_y2 - y2]);
         new_vel2 = sqrt(u2x(1)^2 + u2y(2)^2);
+        
+        new_vel1 = apply_friction(ball_friction, new_vel1, dt);
+        new_vel2 = apply_friction(ball_friction, new_vel2, dt);
     end
 end
 
