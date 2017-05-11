@@ -30,7 +30,7 @@ ball_speed = 0.0;
 
 % r, g, b, posX, posY, striped, velocity, angle
 balls = [
-    242, 242, 242, 15 + width_inner/2, 16 + 1/4 * length_inner - 1/2 * ball_size, 0, 0.2, 91;
+    242, 242, 242, 15 + width_inner/2, 90 + 1/4 * length_inner - 1/2 * ball_size, 0, 0.3, 91;
     % 242, 242, 242, 30.0, 130.0, 0.0, 0.2, 5.0;
     
     247, 202, 23, 15 + width_inner/2, 15 + 3/4 * length_inner, 0, ball_speed, 30;
@@ -55,7 +55,7 @@ balls = [
     143, 68, 173, 15 + width_inner/2, 15 + 3/4 * length_inner + 4 * ball_size, 1, ball_speed, 10;
 ];
 
-figure;
+fig = figure;
 hold on;
 rectangle('Position', [0 0 width_outer length_outer], ...
     'Curvature', 0.2, 'FaceColor', band_color / 255);
@@ -87,9 +87,15 @@ axis equal
 balls_rects = zeros(16);
 balls_lines = zeros(16);
 
-visible_balls = 7;
+visible_balls = 16;
 for k = 1:500000
+    if ~ishghandle(fig)
+        break
+    end
     for i = 1:visible_balls
+        if ~ishghandle(fig)
+            break
+        end
         cX = balls(i, 4);
         cY = balls(i, 5);
         cV = balls(i, 7);
@@ -105,6 +111,9 @@ for k = 1:500000
         balls(i, 8) = band_bounce(cX, cY, cA);
 
         for j = 1:visible_balls
+            if ~ishghandle(fig)
+                break
+            end
             if i < j
                 cA = balls(i, 8);
                 vA = balls(i, 7);
