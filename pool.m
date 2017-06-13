@@ -3,15 +3,12 @@ close all;
 
 width_outer = 142.0;
 length_outer = 254.0;
-
 width_inner = 112.0;
 length_inner = 224.0;
-
 ball_size = 5.08;
 
 pocket_size = 22;
 pocket_color = [62 22 10];
-
 cloth_color = [2 102 42];
 band_color = [162 61 31];
 border_color = [116 43 21];
@@ -26,39 +23,39 @@ border_color = [116 43 21];
 % black = [43 43 43];
 % white = [242 242 242];
 
-w = 3; % 3m/s
+w = 5; % m/s
 dt = 0.001; % 1/1000 of second
 
-white_ball_speed = (100 * w) * dt;
+white_ball_speed = 100 * w * dt;
 ball_speed = 0.0;
 
-cloth_friction = 0.1;
+cloth_friction = 0.05;
 
 % r, g, b, posX, posY, striped, velocity, angle
 balls = [
-    242, 242, 242, 15 + width_inner/2, 15 + 1/4 * length_inner - 1/2 * ball_size, 0, white_ball_speed, 91;
+    242, 242, 242, 15 + width_inner/2, 15 + 1/4 * length_inner - 1/2 * ball_size, 0, white_ball_speed, 89.5;
     % 242, 242, 242, 30.0, 130.0, 0.0, 0.2, 0.0;
     
-    247, 202, 23, 15 + width_inner/2, 15 + 3/4 * length_inner, 0, ball_speed, 30;
+    247, 202, 23, 15 + width_inner/2, 15 + 3/4 * length_inner, 0, ball_speed, 0;
     % 247, 202, 23, 90.0, 130, 0.0, 0.2, 180.0;
      
-    36, 116, 169, 15 + width_inner/2 - 1/2 * ball_size, 15 + 3/4 * length_inner + ball_size, 1, ball_speed, 45;
-    239, 72, 54, 15 + width_inner/2 + 1/2 * ball_size, 15 + 3/4 * length_inner + ball_size, 0, ball_speed, 50;
+    36, 116, 169, 15 + width_inner/2 - 1/2 * ball_size, 14.5 + 3/4 * length_inner + ball_size, 1, ball_speed, 0;
+    239, 72, 54, 15 + width_inner/2 + 1/2 * ball_size, 14.5 + 3/4 * length_inner + ball_size, 0, ball_speed, 0;
     
-    43, 43, 43, 15 + width_inner/2, 15 + 3/4 * length_inner + 2 * ball_size, 0, ball_speed, 170;
-    7, 168, 132, 15 + width_inner/2 + ball_size, 15 + 3/4 * length_inner + 2 * ball_size, 1, ball_speed, 130;
-    143, 68, 173, 15 + width_inner/2 - ball_size, 15 + 3/4 * length_inner + 2 * ball_size, 0, ball_speed, 250;
+    43, 43, 43, 15 + width_inner/2, 14 + 3/4 * length_inner + 2 * ball_size, 0, ball_speed, 0;
+    7, 168, 132, 15 + width_inner/2 + ball_size, 14 + 3/4 * length_inner + 2 * ball_size, 1, ball_speed, 0;
+    143, 68, 173, 15 + width_inner/2 - ball_size, 14 + 3/4 * length_inner + 2 * ball_size, 0, ball_speed, 0;
     
-    179, 55, 64, 15 + width_inner/2 + 1/2 * ball_size, 15 + 3/4 * length_inner + 3 * ball_size, 1, ball_speed, 350;
-    247, 202, 23, 15 + width_inner/2 - 1/2 * ball_size, 15 + 3/4 * length_inner + 3 * ball_size, 1, ball_speed, 120;
-    36, 116, 169, 15 + width_inner/2 + 3/2 * ball_size, 15 + 3/4 * length_inner + 3 * ball_size, 0, ball_speed, 10;
-    239, 72, 54, 15 + width_inner/2 - 3/2 * ball_size, 15 + 3/4 * length_inner + 3 * ball_size, 1, ball_speed, 70;
+    179, 55, 64, 15 + width_inner/2 + 1/2 * ball_size, 13.5 + 3/4 * length_inner + 3 * ball_size, 1, ball_speed, 0;
+    247, 202, 23, 15 + width_inner/2 - 1/2 * ball_size, 13.5 + 3/4 * length_inner + 3 * ball_size, 1, ball_speed, 0;
+    36, 116, 169, 15 + width_inner/2 + 3/2 * ball_size, 13.5 + 3/4 * length_inner + 3 * ball_size, 0, ball_speed, 0;
+    239, 72, 54, 15 + width_inner/2 - 3/2 * ball_size, 13.5 + 3/4 * length_inner + 3 * ball_size, 1, ball_speed, 0;
     
-    179, 55, 64, 15 + width_inner/2 + ball_size, 15 + 3/4 * length_inner + 4 * ball_size, 0, ball_speed, 90;
-    249, 148, 6, 15 + width_inner/2 + 2 * ball_size, 15 + 3/4 * length_inner + 4 * ball_size, 1, ball_speed, 260;
-    249, 148, 6, 15 + width_inner/2 - ball_size, 15 + 3/4 * length_inner + 4 * ball_size, 0, ball_speed, 45;
-    7, 168, 132, 15 + width_inner/2 - 2 * ball_size, 15 + 3/4 * length_inner + 4 * ball_size, 0, ball_speed, 80;
-    143, 68, 173, 15 + width_inner/2, 15 + 3/4 * length_inner + 4 * ball_size, 1, ball_speed, 10;
+    179, 55, 64, 15 + width_inner/2 + ball_size, 13 + 3/4 * length_inner + 4 * ball_size, 0, ball_speed, 0;
+    249, 148, 6, 15 + width_inner/2 + 2 * ball_size, 13 + 3/4 * length_inner + 4 * ball_size, 1, ball_speed, 0;
+    249, 148, 6, 15 + width_inner/2 - ball_size, 13 + 3/4 * length_inner + 4 * ball_size, 0, ball_speed, 0;
+    7, 168, 132, 15 + width_inner/2 - 2 * ball_size, 13 + 3/4 * length_inner + 4 * ball_size, 0, ball_speed, 0;
+    143, 68, 173, 15 + width_inner/2, 13 + 3/4 * length_inner + 4 * ball_size, 1, ball_speed, 0;
 ];
 
 fig = figure;
@@ -96,7 +93,12 @@ balls_lines = zeros(16);
 visible_balls = 16;
 
 time = text(-75, 200, 'Time = 0');
-for k = 1:500000
+
+n = 1000;
+
+velocity_values = zeros(visible_balls, n);
+
+for k = 1:n
     if ~ishghandle(fig)
         break
     end
@@ -115,15 +117,20 @@ for k = 1:500000
 
         cX = balls(i, 4);
         cY = balls(i, 5);
-        balls(i, 8) = band_bounce(cX, cY, cA);
+        [v, a] = band_bounce(cX, cY, cA, cV);
+        balls(i, 7) = v;
+        balls(i, 8) = a;
 
+        balls(1, 7)
         for j = 1:visible_balls
             if ~ishghandle(fig)
                 break
             end
             if i < j
+                cX = balls(i, 4);
+                cY = balls(i, 5);
+                cV = balls(i, 7);
                 cA = balls(i, 8);
-                vA = balls(i, 7);
                 tX = balls(j, 4);
                 tY = balls(j, 5);
                 tV = balls(j, 7);
@@ -135,8 +142,12 @@ for k = 1:500000
                 balls(j, 7) = new_vel2;
             end
         end
+        balls(1, 7)
         
         balls(i, 7) = apply_friction(cloth_friction, balls(i, 7), dt);
+        
+        cX = balls(i, 4);
+        cY = balls(i, 5);
         
         x = cX - ball_size/2;
         y = cY - ball_size/2;
@@ -154,10 +165,21 @@ for k = 1:500000
         if balls(i, 6) == 1
             t = ball_size/2 - 1;
             balls_lines(i) = line([cX + t cX - t], [cY + t cY - t], 'Color', [1, 1, 1], 'LineWidth', 2);
-        end 
+        end
     end
+    
+    for i = 1:visible_balls
+        velocity_values(i, k) = balls(i, 7);
+    end
+
     set(time, 'String', ['Time = ', num2str(k * dt), 's']);
     pause(0.0001);
 end
+hold off;
 
+figure;
+hold on;
+for i = 1:visible_balls
+    plot(velocity_values(i, :))
+end
 hold off;
