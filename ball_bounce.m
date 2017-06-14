@@ -1,4 +1,4 @@
-function [new_a1, new_vel1, new_a2, new_vel2] = ball_bounce(x1, y1, vel1, a1, x2, y2, vel2, a2, dt)
+function [hit, new_a1, new_vel1, new_a2, new_vel2] = ball_bounce(x1, y1, vel1, a1, x2, y2, vel2, a2, dt)
     ball_size = 5.08;
 
     new_a1 = a1;
@@ -11,6 +11,8 @@ function [new_a1, new_vel1, new_a2, new_vel2] = ball_bounce(x1, y1, vel1, a1, x2
     
     m1 = 1;
     m2 = 1;
+    
+    hit = false;
 
     dist = sqrt((x1 - x2)^2 + (y1 - y2)^2);
     % collision condition && balls're getting closer to each other
@@ -18,6 +20,8 @@ function [new_a1, new_vel1, new_a2, new_vel2] = ball_bounce(x1, y1, vel1, a1, x2
             sqrt((next_x1 - next_x2)^2 + (next_y1 - next_y2)^2) < dist
         touch_x = (x1 + x2) / 2;
         touch_y = (y1 + y2) / 2;
+        
+        hit = true;
         
         if x1 >= x2 && y1 >= y2
             % first quarter

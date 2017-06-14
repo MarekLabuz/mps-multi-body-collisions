@@ -23,7 +23,7 @@ border_color = [116 43 21];
 % black = [43 43 43];
 % white = [242 242 242];
 
-w = 5; % m/s
+w = 6; % m/s
 dt = 0.001; % 1/1000 of second
 
 white_ball_speed = 100 * w * dt;
@@ -31,6 +31,11 @@ ball_speed = 0.0;
 
 cloth_friction = 0.05;
 
+balls_names = ['white     '; 'yellow    '; 'blue (/)  '; 'red       '; 'black     '; ...
+    'green (/) '; 'purple    '; 'brown (/) '; 'yellow (/)'; 'blue      '; ...
+    'red (/)   '; 'brown     '; 'orange (/)'; 'orange    '; 'green     '; 'purple (/)'];
+
+%%
 % r, g, b, posX, posY, striped, velocity, angle
 balls = [
     242, 242, 242, 15 + width_inner/2, 15 + 1/4 * length_inner - 1/2 * ball_size, 0, white_ball_speed, 89.5;
@@ -93,10 +98,18 @@ balls_lines = zeros(16);
 visible_balls = 16;
 
 time = text(-75, 200, 'Time = 0');
+hits = text(-75, 180, 'Ball collisions = 0');
+hits_band = text(-75, 160, 'Band Hits = 0');
 
-n = 1000;
+n = 100;
 
+balls_path_x = zeros(visible_balls, n);
+balls_path_y = zeros(visible_balls, n);
 velocity_values = zeros(visible_balls, n);
+hits_num = zeros(1, n);
+hits_counter = 0;
+hits_band_num = zeros(1, n);
+hits_band_counter = 0;
 
 for k = 1:n
     if ~ishghandle(fig)
@@ -117,7 +130,10 @@ for k = 1:n
 
         cX = balls(i, 4);
         cY = balls(i, 5);
-        [v, a] = band_bounce(cX, cY, cA, cV);
+        [hit_band, v, a] = band_bounce(cX, cY, cA, cV);
+        if hit_band
+            hits_band_counter = hits_band_counter + 1;
+        end
         balls(i, 7) = v;
         balls(i, 8) = a;
 
@@ -135,7 +151,10 @@ for k = 1:n
                 tY = balls(j, 5);
                 tV = balls(j, 7);
                 tA = balls(j, 8);
-                [new_a1, new_vel1, new_a2, new_vel2] = ball_bounce(cX, cY, cV, cA, tX, tY, tV, tA, dt);
+                [hit, new_a1, new_vel1, new_a2, new_vel2] = ball_bounce(cX, cY, cV, cA, tX, tY, tV, tA, dt);
+                if hit
+                    hits_counter = hits_counter + 1;
+                end
                 balls(i, 8) = new_a1;
                 balls(i, 7) = new_vel1;
                 balls(j, 8) = new_a2;
@@ -170,9 +189,16 @@ for k = 1:n
     
     for i = 1:visible_balls
         velocity_values(i, k) = balls(i, 7);
+        balls_path_x(i, k) = balls(i, 4);
+        balls_path_y(i, k) = balls(i, 5);
     end
+    
+    hits_num(k) = hits_counter;
+    hits_band_num(k) = hits_band_counter;
 
     set(time, 'String', ['Time = ', num2str(k * dt), 's']);
+    set(hits, 'String', ['Ball collisions = ', num2str(hits_counter)]);
+    set(hits_band, 'String', ['Band hits = ', num2str(hits_band_counter)]);
     pause(0.0001);
 end
 hold off;
@@ -180,6 +206,24 @@ hold off;
 figure;
 hold on;
 for i = 1:visible_balls
-    plot(velocity_values(i, :))
+    plot(velocity_values(i, :), 'DisplayName', balls_names(i, :))
 end
 hold off;
+xlabel('Time steps (0.001s)');
+ylabel('Velocity (m/s)');
+legend('-DynamicLegend');
+
+figure;
+hold on;
+plot(hits_num);
+plot(hits_band_num);
+hold off;
+
+figure;
+hold on;
+for i = 1:visible_balls
+    plot(balls_path_x(i, :), balls_path_y(i, :))
+end
+hold off;
+
+
